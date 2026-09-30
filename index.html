@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Power of Offloading · InnoFair 2026</title>
+  <style>
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/Sora-VariableFont_wght.ttf") format("truetype");
+      font-weight: 100 800;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Pogonia";
+      src: url("assets/fonts/Pogonia-Bold.woff") format("woff");
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Pogonia";
+      src: url("assets/fonts/Pogonia-ExtraBold.woff") format("woff");
+      font-weight: 800;
+      font-display: swap;
+    }
+
+    :root {
+      --purple: #5926eb;
+      --purple-dark: #3a2596;
+      --ink: #383541;
+      --ink-soft: #66626d;
+      --cream: #f0f0e6;
+      --white: #ffffff;
+      --yellow: #f8d93c;
+      --mint: #8af7c8;
+      --lavender: #ece6fb;
+      --lavender-line: #dcd2f7;
+      --gray: #dedee0;
+      --panel: #f8f8f4;
+      --red: #eb5b4f;
+      --good: #13865c;
+      --alert: #d63f33;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      background: #24222b;
+      color: var(--ink);
+      font-family: "Sora", system-ui, sans-serif;
+    }
+
+    body {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 24px;
+      overflow: auto;
+    }
+
+    body.clean {
+      display: block;
+      width: 1280px;
+      height: 720px;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .deck-shell {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+    }
+
+    body.clean .deck-shell { display: block; }
+
+    .stage {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+    }
+
+    .deck {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 720px;
+      overflow: hidden;
+      background: var(--cream);
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.38);
+      transform-origin: top left;
+    }
+
+    body.clean .deck { box-shadow: none; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 1280px;
+      height: 720px;
+      overflow: visible;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .slide.active { display: block; }
+    .slide h1, .slide h2, .slide h3, .slide p { margin: 0; }
+
+    .slide-pad { padding: 56px 72px 62px; }
+
+    .slide-title {
+      max-width: 1040px;
+      font-size: 50px;
+      font-weight: 780;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+
+    .source {
+      position: absolute;
+      right: 124px;
+      bottom: 24px;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .source a { color: inherit; text-underline-offset: 3px; }
+
+    .slide-mark {
+      position: absolute;
+      bottom: 24px;
+      left: 72px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-soft);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .slide-mark::before {
+      width: 22px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--purple);
+      content: "";
+    }
+
+    .slide-no {
+      position: absolute;
+      right: 72px;
+      bottom: 24px;
+      color: var(--ink-soft);
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .purple { color: var(--purple); }
+
+    .sticker {
+      display: inline-block;
+      padding: 9px 14px 10px;
+      border-radius: 4px;
+      color: var(--ink);
+      font-family: "Pogonia", "Sora", sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: 0 5px 16px rgba(56, 53, 65, 0.14);
+    }
+
+    .brand {
+      position: absolute;
+      top: 52px;
+      left: 72px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand img { display: block; width: 150px; height: auto; }
+
+    /* 01 cover */
+    .cover .event {
+      position: absolute;
+      top: 62px;
+      right: 72px;
+      color: var(--ink-soft);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .cover-copy {
+      position: absolute;
+      top: 190px;
+      left: 72px;
+      width: 840px;
+    }
+
+    .cover h1 {
+      font-size: 88px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.98;
+      text-wrap: balance;
+    }
+
+    .cover .subtitle {
+      width: 760px;
+      margin-top: 30px;
+      color: var(--purple-dark);
+      font-size: 29px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .cover .sticker {
+      position: absolute;
+      top: 174px;
+      right: 96px;
+      background: var(--yellow);
+      transform: rotate(5deg);
+    }
+
+    .cover .byline {
+      position: absolute;
+      bottom: 64px;
+      left: 76px;
+      color: var(--ink-soft);
+      font-size: 18px;
+    }
+
+    .cover-orbit {
+      position: absolute;
+      right: -115px;
+      bottom: -174px;
+      width: 510px;
+      height: 510px;
+      border: 54px solid var(--lavender);
+      border-radius: 50%;
+    }
+
+    .cover-orbit::after {
+      position: absolute;
+      top: 63px;
+      left: 63px;
+      width: 276px;
+      height: 276px;
+      border-radius: 50%;
+      background: var(--purple);
+      content: "";
+    }
+    .slide .penalty-intro { margin-top: 10px; color: var(--purple); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+    .penalty { margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .penalty-cell { padding-top: 18px; border-top: 8px solid var(--alert); }
+    .penalty-cell .penalty-value { color: var(--alert); }
+    .penalty-cell.up { border-top-color: var(--good); }
+    .penalty-value { font-family: "Pogonia", "Sora", sans-serif; font-size: 64px; font-weight: 750; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .penalty-cell.up .penalty-value { color: var(--good); }
+    .slide .penalty-label { margin-top: 12px; font-size: 18px; font-weight: 650; line-height: 1.3; }
+    .slide .penalty-when { margin-top: 6px; color: var(--ink-soft); font-size: 18px; line-height: 1.4; }
+    .slide .messages-goal { margin-top: 8px; font-size: 22px; font-weight: 620; }
+    .bar-row.constructive .bar-label { font-weight: 720; }
+    .slide .penalty-turn { margin-top: 72px; max-width: 900px; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; text-wrap: balance; }
+    .study-note { margin-top: 24px; color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
+
+    /* 03 messages */
+    .messages-count { margin-top: 10px; color: var(--purple); font-size: 28px; font-weight: 720; letter-spacing: -0.02em; }
+    .messages .bars-wrap { margin-top: 24px; }
+
+    /* 06 modes */
+    .modes-context { margin-top: 12px; color: var(--ink-soft); font-size: 20px; }
+    .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 38px; }
+    .mode { padding-top: 24px; border-top: 8px solid var(--ink); }
+    .mode.agentic { border-color: var(--purple); }
+    .mode-name { font-size: 43px; font-weight: 760; letter-spacing: -0.04em; line-height: 1.05; }
+    .mode.agentic .mode-name { color: var(--purple); }
+    .slide .mode-prompt { margin-top: 10px; font-size: 24px; font-weight: 610; line-height: 1.4; }
+    .mode-flow { display: flex; align-items: center; gap: 8px; margin-top: 40px; }
+    .flow-step { flex: 1; padding: 12px 8px; border-radius: 4px; background: #deddd9; font-size: 18px; font-weight: 720; text-align: center; }
+    .agentic .flow-step { background: var(--lavender); }
+    .flow-arrow { color: var(--ink-soft); font-size: 20px; font-weight: 700; }
+    .slide .mode-result { margin-top: 34px; font-size: 25px; font-weight: 650; line-height: 1.35; }
+    .mode-result span { display: block; margin-top: 7px; color: var(--ink-soft); font-size: 16px; font-weight: 480; line-height: 1.45; }
+
+    /* 08 room question */
+    .section-break { background: var(--ink); color: var(--cream); }
+    .section-break h2 { position: absolute; top: 250px; left: 72px; width: 1040px; font-size: 76px; font-weight: 790; letter-spacing: -0.045em; line-height: 1.08; text-wrap: balance; }
+    .section-break .section-count { position: absolute; left: 72px; bottom: 92px; color: #bdb8c9; font-size: 22px; font-weight: 620; }
+    .section-break .slide-mark, .section-break .slide-no { color: #bdb8c9; }
+    .section-break .slide-mark::before { background: var(--mint); }
+    .verdict-lead { position: absolute; top: 210px; left: 72px; width: 1080px; font-size: 50px; font-weight: 760; letter-spacing: -0.035em; line-height: 1.16; text-wrap: balance; }
+    .verdict-lead em { font-style: normal; color: var(--alert); }
+    .slide .verdict-bridge { position: absolute; left: 72px; bottom: 120px; width: 900px; padding-top: 20px; border-top: 3px solid var(--purple); color: var(--purple); font-size: 26px; font-weight: 680; line-height: 1.35; }
+    .vcae { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 30px; }
+    .vcae-col h3 { font-size: 26px; font-weight: 760; letter-spacing: -0.02em; }
+    .vcae-col h3 span { display: block; margin-top: 4px; color: var(--ink-soft); font-size: 16px; font-weight: 600; letter-spacing: 0; }
+    .vcae-shot { position: relative; margin-top: 14px; height: 250px; border-radius: 6px; overflow: hidden; background: #8ec9ff center / cover no-repeat; }
+    .vcae-prompt { position: absolute; left: 14px; bottom: 14px; padding: 9px 14px; border-radius: 8px; background: rgba(255,255,255,.94); color: var(--ink); font-size: 19px; font-weight: 680; }
+    .vcae-shot.web { background-color: #fff; background-position: top center; box-shadow: 0 0 0 1px rgba(56,53,65,.18); }
+    .vcae-list { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .vcae-list li { padding-left: 22px; position: relative; font-size: 19px; font-weight: 560; line-height: 1.3; }
+    .vcae-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 10px; height: 10px; border-radius: 2px; background: var(--ink-soft); }
+    .vcae-col.ae .vcae-list li::before { background: var(--good); }
+
+    /* 03 bars */
+    .bars-wrap { margin-top: 42px; }
+    .bar-row { display: grid; grid-template-columns: 360px 1fr 82px; gap: 24px; align-items: center; padding: 13px 0; }
+    .bar-label { font-size: 17px; line-height: 1.35; }
+    .bar-track { height: 28px; overflow: hidden; border-radius: 4px; background: #deddd9; }
+    .bar-fill { height: 100%; border-radius: inherit; background: #5a5663; }
+    .bar-row:nth-child(2) .bar-fill { background: #77727f; }
+    .bar-row:nth-child(3) .bar-fill { background: #938f9b; }
+    .bar-row:nth-child(4) .bar-fill { background: var(--good); }
+    .bar-row.constructive .bar-label, .bar-row.constructive .bar-value { color: var(--good); }
+    .bar-value { font-size: 28px; font-weight: 760; font-variant-numeric: tabular-nums; text-align: right; }
+    .bars-foot { margin-top: 28px; display: flex; justify-content: space-between; gap: 24px; color: var(--ink-soft); font-size: 16px; }
+
+    /* 11 projects */
+    .projects-lead { position: absolute; top: 178px; left: 72px; width: 450px; color: var(--purple); font-size: 42px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.24; }
+    .project-list { position: absolute; top: 184px; right: 72px; width: 610px; }
+    .project-item { display: grid; grid-template-columns: 54px 1fr; gap: 22px; padding: 23px 0; border-top: 1px solid rgba(56,53,65,.18); }
+    .project-item:last-child { border-bottom: 1px solid rgba(56,53,65,.18); }
+    .project-item .index { color: var(--purple); font-size: 16px; font-weight: 750; }
+    .project-item p { font-size: 24px; font-weight: 590; line-height: 1.34; }
+
+    /* 12 evidence */
+    .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 76px; margin-top: 48px; }
+    .evidence-item { min-height: 170px; padding: 20px 0 26px; border-top: 2px solid var(--purple); }
+    .evidence-item:nth-child(n+3) { margin-top: 18px; }
+    .evidence-item .verb { display: block; color: var(--purple); font-size: 34px; font-weight: 760; letter-spacing: -0.03em; line-height: 1.1; }
+    .evidence-item p { margin-top: 12px; font-size: 24px; font-weight: 560; line-height: 1.35; text-wrap: balance; }
+
+    /* V2: evidence shift */
+    .study-v2 { display: grid; grid-template-columns: .82fr 1.18fr; gap: 72px; margin-top: 44px; }
+    .study-v2 .conditions { padding-top: 8px; }
+    .study-v2 .condition-word { display: flex; justify-content: space-between; align-items: baseline; padding: 22px 0; border-top: 2px solid rgba(56,53,65,.18); font-size: 30px; font-weight: 690; }
+    .study-v2 .rank { color: var(--ink-soft); font-size: 20px; font-weight: 620; }
+    .study-v2 .rank.low { color: var(--alert); }
+    .study-v2 .condition-word:last-child { border-bottom: 2px solid rgba(56,53,65,.18); }
+    .study-v2 .condition-word
+    .study-v2 .condition-word:nth-child(2)
+    .study-v2 .condition-word:nth-child(3)
+    .study-v2 .finding { padding-left: 48px; border-left: 1px solid rgba(56,53,65,.16); }
+    .study-v2 .finding strong { display: block; color: var(--purple); font-size: 38px; font-weight: 740; letter-spacing: -.035em; line-height: 1.22; }
+    .study-v2 .finding p { margin-top: 26px; color: var(--ink-soft); font-size: 23px; font-weight: 560; line-height: 1.45; }
+
+    .project-context { margin-top: 18px; color: var(--purple); font-size: 18px; font-weight: 700; }
+
+    /* 19 close */
+    .close { background: var(--purple); color: var(--white); }
+    .close .brand { filter: brightness(0) invert(1); }
+    .close h2 { position: absolute; top: 166px; left: 72px; width: 850px; font-size: 59px; font-weight: 770; letter-spacing: -0.04em; line-height: 1.15; text-wrap: balance; }
+    .close .second { position: absolute; top: 400px; left: 72px; width: 700px; padding-top: 24px; border-top: 2px solid var(--mint); color: #e9e2ff; font-size: 30px; font-weight: 590; line-height: 1.35; text-wrap: balance; }
+    .close-qr { position: absolute; right: 60px; top: 150px; width: 300px; text-align: center; }
+    .close-qr img { display: block; width: 250px; height: 250px; margin: 0 auto; padding: 14px; border-radius: 8px; background: var(--white); box-sizing: border-box; }
+    .slide .close-qr p { margin-top: 12px; color: #e9e2ff; font-size: 16px; font-weight: 600; white-space: nowrap; }
+    .close .discussion { position: absolute; right: 72px; bottom: 48px; padding: 9px 14px 10px; border-radius: 4px; background: var(--yellow); color: var(--ink); font-family: "Pogonia", "Sora", sans-serif; font-size: 19px; font-weight: 700; transform: rotate(-3deg); }
+
+    .controls { display: flex; align-items: center; gap: 12px; color: #dedce5; font-size: 14px; }
+    .controls button { min-width: 42px; height: 38px; border: 1px solid #5f5b69; border-radius: 12px; background: #34313d; color: var(--white); font: inherit; cursor: pointer; }
+    .controls button:hover { background: #403c4a; }
+    .controls button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+    .controls button:disabled { opacity: .35; cursor: default; }
+    .controls .counter { min-width: 62px; text-align: center; font-variant-numeric: tabular-nums; }
+    .controls .hint { margin-left: 8px; color: #aaa6b2; }
+
+    @media print {
+      @page { size: 13.333333in 7.5in; margin: 0; }
+
+      html, body, body.clean {
+        display: block !important;
+        width: 1280px !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+
+      .deck-shell, .stage, .deck {
+        position: static !important;
+        display: block !important;
+        width: 1280px !important;
+        height: auto !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      .slide, .slide.active {
+        position: relative;
+        inset: auto;
+        display: block !important;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .controls { display: none !important; }
+    }
+
+    body.clean .controls { display: none; }
+
+    @media (max-width: 720px) {
+      body { padding: 16px; }
+      .controls .hint { display: none; }
+    }
+    ::selection { background: var(--purple); color: var(--white); }
+    .vcae.tall .vcae-shot { height: 330px; }
+    .vcae.tall .vcae-shot.game { background-size: 112% auto; background-position: center bottom; }
+    .penalty-cell.neutral { border-top-color: var(--ink); }
+    .penalty-cell.neutral .penalty-value { color: var(--ink); }
+    .penalty-cell.key { position: relative; z-index: 0; transition: border-color .35s ease; }
+    .penalty-cell.key::before { position: absolute; inset: 0 -14px -14px; z-index: -1; border-radius: 0 0 6px 6px; background: #e2d9fb; opacity: 0; transition: opacity .35s ease; content: ""; }
+    .penalty-cell.key .penalty-value { transition: color .35s ease; }
+    .penalty-slide:has(.penalty-turn.shown) .penalty-cell.key, body.clean .penalty-cell.key { border-top-color: var(--purple); }
+    .penalty-slide:has(.penalty-turn.shown) .penalty-cell.key::before, body.clean .penalty-cell.key::before { opacity: 1; }
+    .penalty-slide:has(.penalty-turn.shown) .penalty-cell.key .penalty-value, body.clean .penalty-cell.key .penalty-value { color: var(--purple); }
+    .key-flag { opacity: 0; transition: opacity .35s ease; }
+    .penalty-slide:has(.penalty-turn.shown) .key-flag, body.clean .key-flag { opacity: 1; }
+    .slide .goal-copy { position: absolute; top: 330px; left: 72px; width: 450px; padding-top: 20px; border-top: 2px solid var(--purple); font-size: 24px; font-weight: 600; line-height: 1.4; }
+    .step { opacity: 0; transform: translateY(14px); transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
+    .step.shown, body.clean .step { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <main class="deck-shell" aria-label="The Power of Offloading presentation">
+    <div class="stage">
+      <div class="deck">
+        <section class="slide cover active" aria-label="Title">
+          <div class="brand"><img src="assets/img/goschool-logo.svg" alt="GoSchool"></div>
+          <p class="event">ELTE InnoFair 2026 · AI Tutors in Higher Education</p>
+          <div class="cover-copy">
+            <h1>The power of offloading.</h1>
+            <p class="subtitle">What the chat logs show, and what I changed in my own course.</p>
+          </div>
+          <p class="byline">Árpád Tamási · ELTE Interdisciplinary Social Research PhD · GoSchool.ai</p>
+          <div class="cover-orbit" aria-hidden="true"></div>
+        </section>
+
+        <section class="slide slide-pad eeg-slide" aria-label="EEG during essay writing">
+          <h2 class="slide-title">EEG during essay writing</h2>
+          <p class="penalty-intro">MIT Media Lab, 2025 · 54 students</p>
+          <div class="study-v2">
+            <div class="conditions" aria-label="Three working modes">
+              <div class="condition-word">Brain only<span class="rank">strongest connectivity</span></div>
+              <div class="condition-word">Search engine<span class="rank">in between</span></div>
+              <div class="condition-word">LLM<span class="rank low">weakest</span></div>
+            </div>
+            <div class="finding">
+              <strong>The LLM group showed weaker brain connectivity.</strong>
+            </div>
+          </div>
+          <p class="source">Kosmyna et al., <em>Your Brain on ChatGPT</em>, arXiv preprint, 2025</p>
+          <span class="slide-no">02</span>
+        </section>
+
+        <section class="slide slide-pad messages" aria-label="Forty thousand student messages">
+          <h2 class="slide-title">What the chat logs show</h2>
+          <p class="messages-count">40,000 student messages to an AI tutor</p>
+          <div class="bars-wrap">
+            <div class="bar-row step"><p class="bar-label">Asks for an explanation, then ends the interaction</p><div class="bar-track"><div class="bar-fill" style="width: 42%"></div></div><span class="bar-value">42%</span></div>
+            <div class="bar-row step"><p class="bar-label">Hands over the task or deliverable</p><div class="bar-track"><div class="bar-fill" style="width: 28%"></div></div><span class="bar-value">28%</span></div>
+            <div class="bar-row step"><p class="bar-label">Several turns, but the synthesis stays with the AI</p><div class="bar-track"><div class="bar-fill" style="width: 20%"></div></div><span class="bar-value">≈20%</span></div>
+            <div class="bar-row constructive step"><p class="bar-label">The student's own idea enters and gets tested</p><div class="bar-track"><div class="bar-fill" style="width: 4%"></div></div><span class="bar-value">≈4%</span></div>
+          </div>
+          <div class="bars-foot"><span>Preliminary, descriptive categorisation</span><span>Tamási, <em>The Power of Outsourcing</em>, The European Sociologist 55, 2026</span></div>
+          <span class="slide-no">03</span>
+        </section>
+
+        <section class="slide section-break" aria-label="Why would I bother?">
+          <h2>“Why would I bother?”</h2>
+          <p class="section-count">How do I get them to do their own work?</p>
+          <span class="slide-no">04</span>
+        </section>
+
+        <section class="slide slide-pad penalty-slide" aria-label="Better homework, weaker exams">
+          <h2 class="slide-title">Better homework, weaker exams</h2>
+          <p class="penalty-intro">26,811 Chinese secondary school students, 30 months</p>
+          <div class="penalty">
+            <div class="penalty-cell up step" data-order="1"><p class="penalty-value">+18%</p><p class="penalty-label">Homework score</p></div>
+            <div class="penalty-cell neutral key step" data-order="2"><p class="penalty-value">−30%</p><p class="penalty-label">Time spent on homework</p><p class="penalty-when key-flag">the number to turn around</p></div>
+            <div class="penalty-cell step" data-order="3"><p class="penalty-value">−20%</p><p class="penalty-label">Monthly exam</p></div>
+            <div class="penalty-cell step" data-order="4"><p class="penalty-value">−24%</p><p class="penalty-label">Entrance exam</p></div>
+          </div>
+          <p class="penalty-turn step" data-order="5">Those who kept the usual homework time barely lost. <span class="purple">The lever is time on own work.</span></p>
+          <p class="source">Strömberg, Lei, Wu, <em>The Generative AI Learning Penalty</em>, CEPR DP21577, 2026</p>
+          <span class="slide-no">05</span>
+        </section>
+
+        <section class="slide slide-pad modes" aria-label="Two programs built with AI">
+          <h2 class="slide-title">Two programs, both built with AI</h2>
+          <p class="modes-context">Vibe coding raises the floor, agentic engineering raises the ceiling.</p>
+          <div class="vcae tall">
+            <div class="vcae-col">
+              <h3>Vibe coding<span>a playable 3D world from one sentence</span></h3>
+              <div class="vcae-shot game" style="background-image: url('assets/img/vibe-minecraft.png')"><p class="vcae-prompt">“Make me a Minecraft.”</p></div>
+            </div>
+            <div class="vcae-col ae">
+              <h3>Agentic engineering<span>a Moodle plugin that teachers rely on</span></h3>
+              <div class="vcae-shot web" style="background-image: url('assets/img/nitro-web-en.png')"></div>
+            </div>
+          </div>
+          <p class="source">Karpathy, <em>Sequoia Ascent 2026</em></p>
+          <span class="slide-no">06</span>
+        </section>
+        <section class="slide slide-pad modes" aria-label="Vibe coding and agentic engineering">
+          <h2 class="slide-title">Same AI, different way of working</h2>
+          <p class="modes-context">Advanced Programming, 2025/26</p>
+          <div class="modes-grid">
+            <div class="mode">
+              <p class="mode-name">Vibe coding</p>
+              <div class="mode-flow"><span class="flow-step">prompt</span><span class="flow-arrow">→</span><span class="flow-step">accept</span><span class="flow-arrow">→</span><span class="flow-step">it runs</span></div>
+              <p class="mode-result">A playable game in minutes.<span>In my course: the entry task, not the achievement.</span></p>
+            </div>
+            <div class="mode agentic">
+              <p class="mode-name">Agentic engineering</p>
+              <div class="mode-flow"><span class="flow-step">spec</span><span class="flow-arrow">→</span><span class="flow-step">diff</span><span class="flow-arrow">→</span><span class="flow-step">test</span><span class="flow-arrow">→</span><span class="flow-step">review</span></div>
+              <p class="mode-result">Software others can rely on.<span>The responsibility stays human.</span></p>
+            </div>
+          </div>
+          <span class="slide-no">07</span>
+        </section>
+
+        <section class="slide slide-pad" aria-label="Process evidence">
+          <h2 class="slide-title">What has to become visible?</h2>
+          <div class="evidence-grid">
+            <div class="evidence-item"><span class="verb">Specification</span><p>What did the student change in it?</p></div>
+            <div class="evidence-item"><span class="verb">Test</span><p>Which result exposed a bug?</p></div>
+            <div class="evidence-item"><span class="verb">Debugging</span><p>How did they find and fix it?</p></div>
+            <div class="evidence-item"><span class="verb">Judgement</span><p>When did they correct or reject the AI’s suggestion?</p></div>
+          </div>
+          <span class="slide-no">08</span>
+        </section>
+
+        <section class="slide slide-pad" aria-label="Own projects">
+          <h2 class="slide-title">A reason to bother: their own problem</h2>
+          <p class="project-context">Advanced Programming, 2025/26 · course design trial, not an impact study</p>
+          <p class="projects-lead">The −30%, turned around.</p>
+          <p class="goal-copy">Goal: more time on own work, not less. They choose the problem and defend every decision.</p>
+          <div class="project-list">
+            <div class="project-item"><span class="index">01</span><p>Time-series store fed by a live air-traffic data stream</p></div>
+            <div class="project-item"><span class="index">02</span><p>Difference-in-differences lab on synthetic data</p></div>
+            <div class="project-item"><span class="index">03</span><p>Mapping the differences between survey waves</p></div>
+          </div>
+          <span class="slide-no">09</span>
+        </section>
+
+        <section class="slide slide-pad" aria-label="More work for the teacher">
+          <h2 class="slide-title">And the teacher?</h2>
+          <p class="verdict-lead">150 students × 4 pieces of evidence = <em>600 to read</em>, per assignment.</p>
+          <p class="verdict-bridge">It needs support too: time, tools, an institutional framework.</p>
+          <span class="slide-no">10</span>
+        </section>
+
+        <section class="slide close" aria-label="Question for the discussion">
+          <div class="brand"><img src="assets/img/goschool-logo.svg" alt="GoSchool"></div>
+          <h2>Don’t fight offloading. Use the time it frees.</h2>
+          <p class="second">Which of your tasks would make that time worth the student’s own work?</p>
+          <div class="close-qr"><img src="assets/img/innofair-qr.svg" alt="QR code for arpadtamasi.github.io/innofair-2026"><p>arpadtamasi.github.io/innofair-2026</p></div>
+          <span class="discussion">discussion</span>
+        </section>
+      </div>
+    </div>
+
+    <nav class="controls" aria-label="Presentation controls">
+      <button id="prev" type="button" aria-label="Previous slide">←</button>
+      <span class="counter" id="counter">1 / 11</span>
+      <button id="next" type="button" aria-label="Next slide">→</button>
+      <span class="hint">Keyboard: ← → · space · Home · End</span>
+    </nav>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const params = new URLSearchParams(location.search);
+    const requested = Number.parseInt(params.get('slide') || '1', 10);
+    const clean = params.get('clean') === '1';
+    let current = Math.min(Math.max(requested - 1, 0), slides.length - 1);
+
+    if (clean) document.body.classList.add('clean');
+
+    function resizeDeck() {
+      if (clean) return;
+      const stage = document.querySelector('.stage');
+      const deck = document.querySelector('.deck');
+      const controlsHeight = 62;
+      const scale = Math.min((window.innerWidth - 48) / 1280, (window.innerHeight - controlsHeight - 48) / 720, 1);
+      deck.style.transform = `scale(${scale})`;
+      stage.style.width = `${1280 * scale}px`;
+      stage.style.height = `${720 * scale}px`;
+    }
+
+    const steps = (i) => [...slides[i].querySelectorAll('.step')]
+      .map((el, n) => [Number(el.dataset.order ?? n), el])
+      .sort((a, b) => a[0] - b[0])
+      .map(([, el]) => el);
+    let revealed = 0;
+
+    function setRevealed(n) {
+      const list = steps(current);
+      revealed = Math.min(Math.max(n, 0), list.length);
+      list.forEach((el, i) => el.classList.toggle('shown', i < revealed));
+    }
+
+    function show(index, allSteps = false) {
+      current = Math.min(Math.max(index, 0), slides.length - 1);
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      setRevealed(allSteps ? steps(current).length : 0);
+      document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+      document.getElementById('prev').disabled = current === 0;
+      document.getElementById('next').disabled = current === slides.length - 1;
+      const url = new URL(location.href);
+      url.searchParams.set('slide', String(current + 1));
+      history.replaceState(null, '', url);
+    }
+
+    function next() {
+      if (revealed < steps(current).length) setRevealed(revealed + 1);
+      else show(current + 1);
+    }
+
+    function prev() {
+      if (revealed > 0) setRevealed(revealed - 1);
+      else if (current > 0) show(current - 1, true);
+    }
+
+    document.getElementById('prev').addEventListener('click', prev);
+    document.getElementById('next').addEventListener('click', next);
+    addEventListener('resize', resizeDeck);
+    addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') prev();
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') next();
+      if (event.key === 'Home') show(0);
+      if (event.key === 'End') show(slides.length - 1, true);
+    });
+    resizeDeck();
+    show(current);
+  </script>
+</body>
+</html>
