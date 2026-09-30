@@ -461,6 +461,13 @@
     .slide.section-break .pivot { margin-top: 72px; color: var(--mint); font-size: 44px; font-weight: 700; letter-spacing: -0.025em; }
     .slide.section-break .quiet { margin-top: 18px; color: #9d98aa; font-size: 24px; font-weight: 520; }
     .section-break .sb { position: absolute; top: 50%; left: 72px; right: 72px; transform: translateY(-58%); }
+    .weekly { display: grid; grid-template-columns: 1fr 36px 1fr 36px 1fr 36px 1fr; align-items: start; margin-top: 72px; }
+    .wk { padding-top: 20px; border-top: 8px solid var(--purple); }
+    .wk-name { display: block; color: var(--purple); font-size: 30px; font-weight: 760; letter-spacing: -0.03em; }
+    .slide .wk p { margin-top: 12px; font-size: 22px; font-weight: 580; line-height: 1.35; }
+    .wk-arrow { position: relative; height: 8px; margin-top: 0; }
+    .wk-arrow::after { position: absolute; top: -8px; left: 10px; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 14px solid var(--purple); content: ""; }
+    .slide .weekly-foot { margin-top: 64px; font-size: 28px; font-weight: 700; letter-spacing: -0.015em; }
     .step { opacity: 0; transform: translateY(14px); transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
     .step.shown, body.clean .step { opacity: 1; transform: none; }
   </style>
@@ -542,29 +549,20 @@
           <p class="source">Karpathy, <em>Sequoia Ascent 2026</em></p>
           <span class="slide-no">06</span>
         </section>
-        <section class="slide slide-pad" aria-label="Own project, own spec, own mistakes">
-          <h2 class="slide-title">Own project, own spec, own mistakes</h2>
-          <p class="project-context">Two courses: 28 students and 16 teachers, 44 own projects · a course design trial</p>
-          <p class="projects-lead">The −30%, turned around.</p>
-          <p class="goal-copy">Goal: more time on their own work, not less.</p>
-          <div class="project-list">
-            <div class="project-item"><span class="index">01</span><p>Motivated to work on it</p></div>
-            <div class="project-item"><span class="index">02</span><p>Nothing to copy</p></div>
-            <div class="project-item"><span class="index">03</span><p>Helping each other is pure gain</p></div>
-            <div class="project-item"><span class="index">04</span><p>It’s what work will expect</p></div>
+        <section class="slide slide-pad" aria-label="44 separate projects, worked on every week">
+          <h2 class="slide-title">44 separate projects, worked on every week</h2>
+          <p class="project-context">Two courses · 28 students and 16 teachers · a course design trial</p>
+          <div class="weekly">
+            <div class="wk"><span class="wk-name">Project</span><p>Is it meaningful and well defined?</p></div>
+            <span class="wk-arrow" aria-hidden="true"></span>
+            <div class="wk"><span class="wk-name">Specification</span><p>Did they shape it, or just nod along?</p></div>
+            <span class="wk-arrow" aria-hidden="true"></span>
+            <div class="wk"><span class="wk-name">Plan</span><p>Did they change it when the machine suggested better?</p></div>
+            <span class="wk-arrow" aria-hidden="true"></span>
+            <div class="wk"><span class="wk-name">Spike</span><p>Did they test the risky points with a quick experiment?</p></div>
           </div>
+          <p class="weekly-foot">Every week, a new step in their own repo. That is what I follow.</p>
           <span class="slide-no">07</span>
-        </section>
-        <section class="slide slide-pad" aria-label="Leading them through the process">
-          <h2 class="slide-title">Leading them through the process</h2>
-          <p class="project-context">Weekly steps, so the process shows week by week</p>
-          <div class="evidence-grid">
-            <div class="evidence-item"><span class="verb">Project</span><p>A meaningful, well-defined problem</p></div>
-            <div class="evidence-item"><span class="verb">Specification</span><p>They shape it, not just nod along</p></div>
-            <div class="evidence-item"><span class="verb">Plan</span><p>They revise it when the AI suggests better</p></div>
-            <div class="evidence-item"><span class="verb">Spike</span><p>They test the risky points with a quick experiment</p></div>
-          </div>
-          <span class="slide-no">08</span>
         </section>
         <section class="slide slide-pad" aria-label="For every word of mine">
           <h2 class="slide-title">For every word of mine, the AI read 44 and wrote 45</h2>
@@ -580,7 +578,7 @@
             </div>
             <p class="words-time">Time: about 115 hours in sessions, about 40 of them the AI working.</p>
           </div>
-          <span class="slide-no">09</span>
+          <span class="slide-no">08</span>
         </section>
         <section class="slide close" aria-label="Question for the discussion">
           <div class="brand"><img src="assets/img/goschool-logo.svg" alt="GoSchool"></div>
@@ -594,7 +592,7 @@
 
     <nav class="controls" aria-label="Presentation controls">
       <button id="prev" type="button" aria-label="Previous slide">←</button>
-      <span class="counter" id="counter">1 / 10</span>
+      <span class="counter" id="counter">1 / 9</span>
       <button id="next" type="button" aria-label="Next slide">→</button>
       <button id="fullscreen" type="button" aria-label="Full screen"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg></button>
       <span class="hint">← → · space · F full screen</span>
