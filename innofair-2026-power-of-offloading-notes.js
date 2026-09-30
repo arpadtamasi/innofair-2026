@@ -33,7 +33,7 @@ window.DECK_NOTES = [
  },
  {
   "title": "The power of offloading, in my own work (~1 min)",
-  "html": "<ul><li>First only my own words: 15,000 in a month.</li><li>Click: what the AI read and wrote for them. ×89.</li><li>About 115 hours. Multiply it in your head.</li><li>I did not think less. I thought at a different level: I decided, the machine did the volume.</li><li>If asked: from the Claude Code transcripts; words do not convert neatly into time.</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>10. “Civilization advances …” (Whitehead)</em></li></ul>"
+  "html": "<ul><li>First only my own words: 15,000 in a month.</li><li>Click: what the AI read and wrote for them. ×89.</li><li>About 60 hours of active work in the month, about half of it the machine working.</li><li>I did not think less. I thought at a different level: I decided, the machine did the volume.</li><li>If asked: from the Claude Code transcripts; active time counts only when something happened, no double counting of parallel sessions (up to 5 at once).</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>10. “Civilization advances …” (Whitehead)</em></li></ul>"
  },
  {
   "title": "“Civilization advances …” (Whitehead) (~30 s)",
@@ -41,6 +41,6 @@ window.DECK_NOTES = [
  },
  {
   "title": "Don’t fight offloading. Use its power to aim higher.",
-  "html": "<ul><li>What happened with me: I accepted that they offload the coding. And I think they got more: they are building real software, they enjoy working on it, and they present it.</li><li>The key is what stayed: control over the software we create.</li><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
+  "html": "<ul><li>What happened with me: I accepted that they offload the coding. And I think they got more: they are building real software, they enjoy working on it, and they will present it at the end.</li><li>The key is what stayed: control over the software we create.</li><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
  }
 ];
