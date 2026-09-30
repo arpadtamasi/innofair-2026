@@ -41,6 +41,6 @@ window.DECK_NOTES = [
  },
  {
   "title": "Don’t fight offloading. Use its power to aim higher.",
-  "html": "<ul><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
+  "html": "<ul><li>What happened with me: I accepted that they offload the coding. And I think they got more: they are building real software, they enjoy working on it, and they present it.</li><li>The key is what stayed: control over the software we create.</li><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
  }
 ];
