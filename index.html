@@ -461,19 +461,6 @@
     .slide.section-break .pivot { margin-top: 72px; color: var(--mint); font-size: 44px; font-weight: 700; letter-spacing: -0.025em; }
     .slide.section-break .quiet { margin-top: 18px; color: #9d98aa; font-size: 24px; font-weight: 520; }
     .section-break .sb { position: absolute; top: 50%; left: 72px; right: 72px; transform: translateY(-58%); }
-    .weekly { display: grid; grid-template-columns: 1fr 36px 1fr 36px 1fr 36px 1fr; align-items: start; margin-top: 64px; }
-    .wk { padding-top: 20px; border-top: 8px solid var(--purple); }
-    .wk-name { display: block; color: var(--purple); font-size: 30px; font-weight: 760; letter-spacing: -0.03em; }
-    .slide .wk p { margin-top: 12px; font-size: 22px; font-weight: 580; line-height: 1.35; }
-    .wk-arrow { position: relative; height: 8px; margin-top: 0; }
-    .wk-arrow::after { position: absolute; top: -8px; left: 10px; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 14px solid var(--purple); content: ""; }
-    .wk.now { position: relative; }
-    .wk-now { position: absolute; top: -44px; left: 0; color: var(--purple); font-size: 16px; font-weight: 760; letter-spacing: 0.02em; }
-    .weekly-next { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 40px; }
-    .wk.next { padding-top: 14px; border-top: 3px dashed color-mix(in srgb, var(--purple) 45%, transparent); }
-    .wk.next .wk-name { font-size: 22px; color: color-mix(in srgb, var(--purple) 70%, var(--ink, #2e2a3a)); }
-    .slide .wk.next p { margin-top: 6px; font-size: 18px; }
-    .slide .weekly-foot { margin-top: 44px; font-size: 28px; font-weight: 700; letter-spacing: -0.015em; }
     .tu-legend { display: flex; align-items: center; gap: 10px; margin-top: 26px; color: var(--ink-soft); font-size: 18px; font-weight: 600; }
     .tu-legend .k { display: inline-block; width: 18px; height: 18px; border-radius: 3px; }
     .tu-legend .k.mine { background: #c9c6ce; }
@@ -495,6 +482,26 @@
     .slide:has(.words-time.shown) .w-wrote, body.clean .w-wrote { width: 50.4%; }
     .slide:has(.words-time.shown) .w-ai-label, body.clean .w-ai-label { opacity: 1; }
     .slide .words-time { color: var(--purple); font-size: 34px; font-weight: 760; letter-spacing: -0.02em; }
+    .snake { position: absolute; top: 240px; left: 0; width: 1280px; height: 330px; }
+    .snake svg { position: absolute; inset: 0; overflow: visible; }
+    .sn-done { fill: none; stroke: var(--purple); stroke-width: 8; stroke-linecap: round; }
+    .sn-next { fill: none; stroke: #b9b5c0; stroke-width: 5; stroke-dasharray: 2 14; stroke-linecap: round; }
+    .sn-dot { fill: var(--purple); }
+    .sn-now { fill: var(--purple); stroke: var(--cream); stroke-width: 5; }
+    .sn-halo { fill: var(--purple); opacity: .16; transform-box: fill-box; transform-origin: center; animation: sn-pulse 2.4s cubic-bezier(.16,1,.3,1) infinite; }
+    @keyframes sn-pulse { 0% { transform: scale(.6); opacity: .35; } 100% { transform: scale(1.35); opacity: 0; } }
+    body.clean .sn-halo { animation: none; opacity: .16; }
+    .sn-todo { fill: var(--cream); stroke: #9d98a6; stroke-width: 4; }
+    .sn-label { position: absolute; text-align: center; }
+    .sn-label span { display: block; font-size: 26px; font-weight: 760; letter-spacing: -0.03em; }
+    .slide .sn-label p { margin-top: 6px; font-size: 18px; font-weight: 560; line-height: 1.35; }
+    .sn-label.done span { color: var(--purple); }
+    .sn-label.now span { color: var(--purple); font-size: 30px; }
+    .slide .sn-label.now p { font-weight: 650; }
+    .sn-label.todo span { color: var(--ink-soft); font-size: 22px; }
+    .slide .sn-label.todo p { color: var(--ink-soft); }
+    .sn-here { position: absolute; top: -40px; left: 1024px; padding: 8px 13px 9px; border-radius: 4px; background: var(--yellow); color: var(--ink); font-family: "Pogonia", "Sora", sans-serif; font-size: 20px; font-weight: 700; line-height: 1; white-space: nowrap; box-shadow: 0 5px 16px rgba(56,53,65,.16); transform: rotate(-4deg); }
+    .slide .weekly-foot { position: absolute; left: 72px; bottom: 56px; margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.015em; }
     .step { opacity: 0; transform: translateY(14px); transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
     .step.shown, body.clean .step { opacity: 1; transform: none; }
   </style>
@@ -579,19 +586,32 @@
         <section class="slide slide-pad" aria-label="44 separate projects, worked on every week">
           <h2 class="slide-title">44 separate projects, worked on every week</h2>
           <p class="project-context">Two courses · 28 students and 16 teachers · a course design trial</p>
-          <div class="weekly">
-            <div class="wk"><span class="wk-name">Project</span><p>Is it meaningful and well defined?</p></div>
-            <span class="wk-arrow" aria-hidden="true"></span>
-            <div class="wk"><span class="wk-name">Specification</span><p>Did they shape it, or just nod along?</p></div>
-            <span class="wk-arrow" aria-hidden="true"></span>
-            <div class="wk"><span class="wk-name">Plan</span><p>Did they change it when the machine suggested better?</p></div>
-            <span class="wk-arrow" aria-hidden="true"></span>
-            <div class="wk now"><span class="wk-now">We are here</span><span class="wk-name">Spike</span><p>Did they test the risky points with a quick experiment?</p></div>
-          </div>
-          <div class="weekly-next">
-            <div class="wk next"><span class="wk-name">Iterate</span><p>The remaining weeks, several rounds.</p></div>
-            <div class="wk next"><span class="wk-name">Reflect</span><p>What did they do, and what did the machine do?</p></div>
-            <div class="wk next"><span class="wk-name">Present &amp; publish</span><p>At the end, in the open.</p></div>
+          <div class="snake">
+            <svg viewBox="0 0 1280 330" width="1280" height="330" aria-hidden="true">
+              <path class="sn-done" d="M110 30 H990"/>
+              <path class="sn-next" d="M990 30 H1090 A60 60 0 0 1 1090 150 H190 A60 60 0 0 0 190 270 H990"/>
+              <circle class="sn-dot" cx="150" cy="30" r="13"/>
+              <circle class="sn-dot" cx="430" cy="30" r="13"/>
+              <circle class="sn-dot" cx="710" cy="30" r="13"/>
+              <circle class="sn-halo" cx="990" cy="30" r="34"/>
+              <circle class="sn-now" cx="990" cy="30" r="21"/>
+              <circle class="sn-todo" cx="430" cy="270" r="12"/>
+              <circle class="sn-todo" cx="990" cy="270" r="12"/>
+              <circle class="sn-todo small" cx="990" cy="150" r="9"/>
+              <circle class="sn-todo small" cx="850" cy="150" r="9"/>
+              <circle class="sn-todo small" cx="710" cy="150" r="9"/>
+              <circle class="sn-todo small" cx="570" cy="150" r="9"/>
+              <circle class="sn-todo small" cx="430" cy="150" r="9"/>
+              <circle class="sn-todo small" cx="290" cy="150" r="9"/>
+            </svg>
+            <div class="sn-label done" style="left: 20px; top: 54px; width: 260px"><span>Project</span><p>Well defined?</p></div>
+            <div class="sn-label done" style="left: 300px; top: 54px; width: 260px"><span>Specification</span><p>Shaped, or nodded along?</p></div>
+            <div class="sn-label done" style="left: 580px; top: 54px; width: 260px"><span>Plan</span><p>Revised with the AI?</p></div>
+            <div class="sn-label now" style="left: 840px; top: 58px; width: 300px"><span>Spike</span><p>Risky points tested?</p></div>
+            <span class="sn-here">We are here</span>
+            <div class="sn-label todo" style="left: 510px; top: 172px; width: 400px"><span>Iterate</span><p>Several weeks, round after round</p></div>
+            <div class="sn-label todo" style="left: 270px; top: 294px; width: 320px"><span>Reflect</span><p>What they did, what the AI did</p></div>
+            <div class="sn-label todo" style="left: 830px; top: 294px; width: 320px"><span>Present &amp; publish</span><p>At the end, in the open</p></div>
           </div>
           <p class="weekly-foot">Every week, a new step on their own project. I follow it, and I support it.</p>
           <span class="slide-no">07</span>
