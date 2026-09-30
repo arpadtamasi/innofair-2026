@@ -507,9 +507,9 @@
     .slide .sn-label.todo p { color: var(--ink-soft); }
     .sn-here { position: absolute; top: -40px; left: 1024px; padding: 8px 13px 9px; border-radius: 4px; background: var(--yellow); color: var(--ink); font-family: "Pogonia", "Sora", sans-serif; font-size: 20px; font-weight: 700; line-height: 1; white-space: nowrap; box-shadow: 0 5px 16px rgba(56,53,65,.16); transform: rotate(-4deg); }
     .slide .weekly-foot { position: absolute; left: 72px; bottom: 56px; margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.015em; }
-    .big-quote { position: absolute; top: 96px; left: 72px; width: 1100px; font-size: 52px; font-weight: 740; letter-spacing: -0.035em; line-height: 1.2; }
-    .big-quote .q-soft { color: var(--ink-soft); font-weight: 560; }
-    .quote-by { position: absolute; left: 72px; top: 540px; padding-top: 18px; border-top: 3px solid var(--purple); color: var(--purple); font-size: 24px; font-weight: 720; }
+    .big-quote { position: absolute; top: 150px; left: 72px; width: 1040px; font-size: 54px; font-weight: 720; letter-spacing: -0.035em; line-height: 1.22; text-wrap: balance; }
+    .big-quote .q-mark { text-decoration: underline; text-decoration-color: var(--good); text-decoration-thickness: 7px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
+    .quote-by { position: absolute; left: 72px; top: 520px; padding-top: 18px; border-top: 3px solid var(--purple); color: var(--purple); font-size: 24px; font-weight: 720; }
     .quote-by span { display: block; margin-top: 6px; color: var(--ink-soft); font-size: 18px; font-weight: 560; font-style: italic; }
     .step { opacity: 0; transform: translateY(14px); transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
     .step.shown, body.clean .step { opacity: 1; transform: none; }
@@ -659,7 +659,7 @@
           <span class="slide-no">09</span>
         </section>
         <section class="slide quote-slide" aria-label="Whitehead on offloading">
-          <p class="big-quote">“Civilization advances<br><span class="q-soft">by extending the number of</span><br><span class="purple">important operations</span><br><span class="q-soft">which we can perform</span><br><span class="purple">without thinking about them.</span>”</p>
+          <p class="big-quote">“Civilization advances by extending the number of important operations which we can perform <span class="q-mark">without thinking about them</span>.”</p>
           <p class="quote-by">Alfred North Whitehead<span>An Introduction to Mathematics, 1911</span></p>
           <span class="slide-no">10</span>
         </section>
