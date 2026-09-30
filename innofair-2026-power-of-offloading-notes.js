@@ -33,14 +33,18 @@ window.DECK_NOTES = [
  },
  {
   "title": "The power of offloading, in my own work (~1 min)",
-  "html": "<ul><li>First only my own words: 15,000 in a month.</li><li>Click: what the AI read and wrote for them. ×89.</li><li>About 60 hours of active work in the month, about half of it the machine working.</li><li>I did not think less. I thought at a different level: I decided, the machine did the volume.</li><li>If asked: from the Claude Code transcripts; active time counts only when something happened, no double counting of parallel sessions (up to 5 at once).</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>10. “Civilization advances …” (Whitehead)</em></li></ul>"
+  "html": "<ul><li>First only my own words: 15,000 in a month.</li><li>Click: what the AI read and wrote for them. ×89.</li><li>About 60 hours of active work in the month, about half of it the machine working.</li><li>I did not think less. I thought at a different level: I decided, the machine did the volume.</li><li>If asked: from the Claude Code transcripts; active time counts only when something happened, no double counting of parallel sessions (up to 5 at once).</li><li><strong>Bridge:</strong> \"So what happened in my courses?\" → <em>10. The lesson from my courses</em></li></ul>"
+ },
+ {
+  "title": "The lesson from my courses (~1 min)",
+  "html": "<ul><li>What happened with me: I accepted that they offload the coding.</li><li>And I think they got more: they are building real software, they enjoy working on it, and they will present it at the end.</li><li>The key is what stayed: control over the software we create.</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>11. “Civilization advances …” (Whitehead)</em></li></ul>"
  },
  {
   "title": "“Civilization advances …” (Whitehead) (~30 s)",
-  "html": "<ul><li>Let it stand for a few seconds.</li><li>Offloading is not new, and it is not laziness: writing, the calculator, the calendar. We hand over the operations, so the mind is free for higher-level work.</li><li>Whitehead co-wrote Principia Mathematica, and later founded process philosophy. Fitting, for a talk about rewarding the process.</li><li><strong>Bridge:</strong> \"So here is my conclusion, and my question to you.\" → <em>11. Don’t fight offloading. Use its power to aim higher.</em></li></ul>"
+  "html": "<ul><li>Let it stand for a few seconds.</li><li>Offloading is not new, and it is not laziness: writing, the calculator, the calendar. We hand over the operations, so the mind is free for higher-level work.</li><li>Whitehead co-wrote Principia Mathematica, and later founded process philosophy. Fitting, for a talk about rewarding the process.</li><li><strong>Bridge:</strong> \"So here is my conclusion, and my question to you.\" → <em>12. Don’t fight offloading. Use its power to aim higher.</em></li></ul>"
  },
  {
   "title": "Don’t fight offloading. Use its power to aim higher.",
-  "html": "<ul><li>What happened with me: I accepted that they offload the coding. And I think they got more: they are building real software, they enjoy working on it, and they will present it at the end.</li><li>The key is what stayed: control over the software we create.</li><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
+  "html": "<ul><li>Don't fight offloading. Use its power to aim higher.</li><li>Which of your tasks could reward the process instead of the result?</li><li>If asked which tools I use: it is not a simple question. Get in touch, my email is on the slide.</li><li><strong>Bridge:</strong> \"Over to you.\"</li></ul>"
  }
 ];
