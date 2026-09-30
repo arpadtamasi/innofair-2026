@@ -17,7 +17,7 @@ window.DECK_NOTES = [
  },
  {
   "title": "Current assignments reward the result. / What if we rewarded the process? (~1 min)",
-  "html": "<ul><li>I watched myself: a heavy AI user, and not weaker but stronger. I get more done, and I learn faster and more.</li><li>If school expects the same results, and the AI produces them, what do I do differently?</li><li>Then I was asked to teach advanced programming, and instructors joined too. Not a line of code since January, after twenty-some years of 100,000 a year: can I teach it credibly? I decided to teach it the way it is done now.</li><li>Click: what if we rewarded the process?</li><li><strong>Bridge:</strong> \"What does 'the way it is done now' mean? Two programs.\" → <em>6. Two programs, both built with AI</em></li></ul>"
+  "html": "<ul><li>I watched myself: a heavy AI user, and not weaker but stronger. I get more done, and I learn faster and more.</li><li>If school expects the same results, and the AI produces them, what do I do differently?</li><li>Then I was asked to teach advanced programming, and instructors joined too. Not a line of code since January, after twenty-some years of 100,000 a year: can I teach it credibly? I decided to teach it the way it is done now.</li><li>We all act rationally: we respond to incentives, and go for what is rewarded. Current assignments reward the result.</li><li>Click: what if we rewarded the process?</li><li><strong>Bridge:</strong> \"What does 'the way it is done now' mean? Two programs.\" → <em>6. Two programs, both built with AI</em></li></ul>"
  },
  {
   "title": "Two programs, both built with AI (~1.5 min)",
