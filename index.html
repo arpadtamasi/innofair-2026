@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="theme-color" content="#24222b">
   <title>The Power of Offloading · InnoFair 2026</title>
   <style>
     @font-face {
@@ -367,7 +371,7 @@
     .close .discussion { position: absolute; right: 72px; bottom: 48px; padding: 9px 14px 10px; border-radius: 4px; background: var(--yellow); color: var(--ink); font-family: "Pogonia", "Sora", sans-serif; font-size: 19px; font-weight: 700; transform: rotate(-3deg); }
 
     .controls { display: flex; align-items: center; gap: 12px; color: #dedce5; font-size: 14px; }
-    .controls button { min-width: 42px; height: 38px; border: 1px solid #5f5b69; border-radius: 12px; background: #34313d; color: var(--white); font: inherit; cursor: pointer; }
+    .controls button { display: inline-grid; place-items: center; min-width: 42px; height: 38px; border: 1px solid #5f5b69; border-radius: 12px; background: #34313d; color: var(--white); font: inherit; cursor: pointer; }
     .controls button:hover { background: #403c4a; }
     .controls button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
     .controls button:disabled { opacity: .35; cursor: default; }
@@ -420,9 +424,15 @@
     body.clean .controls { display: none; }
 
     @media (max-width: 720px) {
-      body { padding: 16px; }
       .controls .hint { display: none; }
     }
+    body.fit { padding: 0; }
+    body.fit .deck-shell { gap: 12px; }
+    body.fit .deck { box-shadow: none; }
+    body.bare { background: #000; }
+    body.bare .deck-shell { gap: 0; }
+    body.bare .controls { display: none; }
+    .stage { touch-action: pan-y; }
     ::selection { background: var(--purple); color: var(--white); }
     .vcae.tall .vcae-shot { height: 330px; }
     .vcae.tall .vcae-shot.game { background-size: 112% auto; background-position: center bottom; }
@@ -585,7 +595,8 @@
       <button id="prev" type="button" aria-label="Previous slide">←</button>
       <span class="counter" id="counter">1 / 11</span>
       <button id="next" type="button" aria-label="Next slide">→</button>
-      <span class="hint">Keyboard: ← → · space · Home · End</span>
+      <button id="fullscreen" type="button" aria-label="Full screen"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg></button>
+      <span class="hint">← → · space · F full screen</span>
     </nav>
   </main>
 
@@ -602,8 +613,16 @@
       if (clean) return;
       const stage = document.querySelector('.stage');
       const deck = document.querySelector('.deck');
-      const controlsHeight = 62;
-      const scale = Math.min((window.innerWidth - 48) / 1280, (window.innerHeight - controlsHeight - 48) / 720, 1);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const full = Boolean(document.fullscreenElement);
+      const small = w < 900 || h < 560;
+      const bare = full || (small && w > h);
+      document.body.classList.toggle('fit', full || small);
+      document.body.classList.toggle('bare', bare);
+      const pad = full || small ? 0 : 48;
+      const controlsHeight = bare ? 0 : 62;
+      const scale = Math.min((w - pad) / 1280, (h - controlsHeight - pad) / 720);
       deck.style.transform = `scale(${scale})`;
       stage.style.width = `${1280 * scale}px`;
       stage.style.height = `${720 * scale}px`;
@@ -643,12 +662,35 @@
       else if (current > 0) show(current - 1, true);
     }
 
+    const fsButton = document.getElementById('fullscreen');
+    function toggleFullscreen() {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen?.();
+    }
+    if (document.documentElement.requestFullscreen) fsButton.addEventListener('click', toggleFullscreen);
+    else fsButton.hidden = true;
+    document.addEventListener('fullscreenchange', resizeDeck);
+
+    let touchX = null;
+    const stageEl = document.querySelector('.stage');
+    stageEl.addEventListener('touchstart', (event) => { touchX = event.changedTouches[0].clientX; }, { passive: true });
+    stageEl.addEventListener('touchend', (event) => {
+      if (touchX === null) return;
+      const x = event.changedTouches[0].clientX;
+      const dx = x - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); return; }
+      const box = stageEl.getBoundingClientRect();
+      if (x - box.left < box.width / 3) prev(); else next();
+    });
+
     document.getElementById('prev').addEventListener('click', prev);
     document.getElementById('next').addEventListener('click', next);
     addEventListener('resize', resizeDeck);
     addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft' || event.key === 'PageUp') prev();
       if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') next();
+      if (event.key === 'f' || event.key === 'F') toggleFullscreen();
       if (event.key === 'Home') show(0);
       if (event.key === 'End') show(slides.length - 1, true);
     });
