@@ -37,7 +37,7 @@ window.DECK_NOTES = [
  },
  {
   "title": "The lesson from my courses (~1 min)",
-  "html": "<ul><li>What happened with me: I accepted that they offload the coding.</li><li>And I think they got more: they are building real software, they enjoy working on it, and they will present it at the end.</li><li>The key is what stayed: control over the software we create.</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>11. “Civilization advances …” (Whitehead)</em></li></ul>"
+  "html": "<ul><li>What happened with me: I accepted that they offload the coding.</li><li>And I think they got more: they are building real software, they enjoy working on it, and at the end they have real software of their own to show, not just a presentation.</li><li>The key is what stayed: control over the software we create.</li><li><strong>Bridge:</strong> \"None of this is new. Someone said it more than a hundred years ago.\" → <em>11. “Civilization advances …” (Whitehead)</em></li></ul>"
  },
  {
   "title": "“Civilization advances …” (Whitehead) (~30 s)",
