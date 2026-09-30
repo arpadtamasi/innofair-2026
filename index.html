@@ -371,6 +371,7 @@
     .close .discussion { position: absolute; right: 72px; bottom: 48px; padding: 9px 14px 10px; border-radius: 4px; background: var(--yellow); color: var(--ink); font-family: "Pogonia", "Sora", sans-serif; font-size: 19px; font-weight: 700; transform: rotate(-3deg); }
 
     .controls { display: flex; align-items: center; gap: 12px; color: #dedce5; font-size: 14px; }
+    #notes-btn { padding: 0 12px; font-size: 13px; font-weight: 650; }
     .controls button { display: inline-grid; place-items: center; min-width: 42px; height: 38px; border: 1px solid #5f5b69; border-radius: 12px; background: #34313d; color: var(--white); font: inherit; cursor: pointer; }
     .controls button:hover { background: #403c4a; }
     .controls button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
@@ -677,10 +678,12 @@
       <span class="counter" id="counter">1 / 11</span>
       <button id="next" type="button" aria-label="Next slide">→</button>
       <button id="fullscreen" type="button" aria-label="Full screen"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg></button>
-      <span class="hint">← → · space · F full screen</span>
+      <button id="notes-btn" type="button" aria-label="Speaker notes">notes</button>
+      <span class="hint">← → · space · F full screen · N notes</span>
     </nav>
   </main>
 
+  <script src="innofair-2026-power-of-offloading-notes.js"></script>
   <script>
     const slides = [...document.querySelectorAll('.slide')];
     const params = new URLSearchParams(location.search);
@@ -719,6 +722,7 @@
       const list = steps(current);
       revealed = Math.min(Math.max(n, 0), list.length);
       list.forEach((el, i) => el.classList.toggle('shown', i < revealed));
+      updatePresenter();
     }
 
     function show(index, allSteps = false) {
@@ -731,6 +735,7 @@
       const url = new URL(location.href);
       url.searchParams.set('slide', String(current + 1));
       history.replaceState(null, '', url);
+      updatePresenter();
     }
 
     function next() {
@@ -741,6 +746,77 @@
     function prev() {
       if (revealed > 0) setRevealed(revealed - 1);
       else if (current > 0) show(current - 1, true);
+    }
+
+
+    let presenter = null;
+    let startedAt = null;
+    const slideTitle = (i) => {
+      const el = slides[i];
+      if (!el) return '';
+      return el.getAttribute('aria-label') || '';
+    };
+
+    function presenterShell() {
+      return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Presenter · The power of offloading</title>
+<style>
+  body { margin: 0; padding: 28px 36px; background: #1d1b22; color: #f0f0e6; font-family: Sora, system-ui, sans-serif; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-bottom: 16px; border-bottom: 1px solid #3a3743; }
+  #pos { color: #8af7c8; font-size: 20px; font-weight: 700; }
+  #title { flex: 1; font-size: 26px; font-weight: 750; }
+  #timer { font-size: 34px; font-weight: 750; font-variant-numeric: tabular-nums; cursor: pointer; }
+  #steps { margin-top: 14px; color: #f8d93c; font-size: 18px; font-weight: 650; min-height: 22px; }
+  #notes { margin-top: 12px; font-size: 22px; line-height: 1.55; max-width: 60em; }
+  #notes p { margin: 0 0 14px; }
+  #notes li { margin-bottom: 6px; }
+  #notes blockquote { margin: 0 0 14px; padding-left: 16px; border-left: 3px solid #8af7c8; }
+  #notes strong { color: #fff; }
+  footer { margin-top: 24px; padding-top: 14px; border-top: 1px solid #3a3743; color: #aaa6b2; font-size: 18px; }
+  footer b { color: #f0f0e6; }
+  .hint { margin-top: 8px; font-size: 14px; color: #77727f; }
+</style></head><body>
+<header><span id="pos"></span><span id="title"></span><span id="timer" title="Click to reset">00:00</span></header>
+<div id="steps"></div>
+<div id="notes"></div>
+<footer>Next: <b id="next"></b><div class="hint">← → or space in this window also move the slides · click the timer to reset it</div></footer>
+</body></html>`;
+    }
+
+    function openPresenter() {
+      if (presenter && !presenter.closed) { presenter.focus(); return; }
+      presenter = window.open('', 'deck-presenter', 'width=1000,height=720');
+      if (!presenter) return;
+      presenter.document.open();
+      presenter.document.write(presenterShell());
+      presenter.document.close();
+      if (!startedAt) startedAt = Date.now();
+      presenter.document.getElementById('timer').addEventListener('click', () => { startedAt = Date.now(); tick(); });
+      presenter.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'PageUp') prev();
+        if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); next(); }
+      });
+      updatePresenter();
+    }
+
+    function tick() {
+      if (!presenter || presenter.closed || !startedAt) return;
+      const s = Math.floor((Date.now() - startedAt) / 1000);
+      presenter.document.getElementById('timer').textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+    }
+    setInterval(tick, 1000);
+
+    function updatePresenter() {
+      if (!presenter || presenter.closed) return;
+      const d = presenter.document;
+      const notes = (window.DECK_NOTES || [])[current] || { title: slideTitle(current), html: '<p>No notes for this slide.</p>' };
+      const left = steps(current).length - revealed;
+      d.getElementById('pos').textContent = `${current + 1} / ${slides.length}`;
+      d.getElementById('title').textContent = notes.title || slideTitle(current);
+      d.getElementById('steps').textContent = left > 0 ? `${left} more click${left > 1 ? 's' : ''} on this slide` : '';
+      d.getElementById('notes').innerHTML = notes.html;
+      const nextNotes = (window.DECK_NOTES || [])[current + 1];
+      d.getElementById('next').textContent = current + 1 < slides.length ? (nextNotes?.title || slideTitle(current + 1)) : 'end of the deck';
+      tick();
     }
 
     const fsButton = document.getElementById('fullscreen');
@@ -765,6 +841,8 @@
       if (x - box.left < box.width / 3) prev(); else next();
     });
 
+    const notesBtn = document.getElementById('notes-btn');
+    if (window.DECK_NOTES) notesBtn.addEventListener('click', openPresenter); else notesBtn.hidden = true;
     document.getElementById('prev').addEventListener('click', prev);
     document.getElementById('next').addEventListener('click', next);
     addEventListener('resize', resizeDeck);
@@ -772,6 +850,7 @@
       if (event.key === 'ArrowLeft' || event.key === 'PageUp') prev();
       if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') next();
       if (event.key === 'f' || event.key === 'F') toggleFullscreen();
+      if (event.key === 'n' || event.key === 'N') openPresenter();
       if (event.key === 'Home') show(0);
       if (event.key === 'End') show(slides.length - 1, true);
     });
