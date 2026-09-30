@@ -492,6 +492,11 @@
     @keyframes sn-pulse { 0% { transform: scale(.6); opacity: .35; } 100% { transform: scale(1.35); opacity: 0; } }
     body.clean .sn-halo { animation: none; opacity: .16; }
     .sn-todo { fill: var(--cream); stroke: #9d98a6; stroke-width: 4; }
+    .sn-straight { fill: none; stroke: #8d75d8; stroke-width: 5; stroke-dasharray: 2 12; stroke-linecap: round; }
+    .sn-goal-ring { fill: var(--cream); stroke: var(--purple); stroke-width: 6; }
+    .sn-goal-dot { fill: var(--purple); }
+    .sn-label.goal span { color: var(--purple); font-size: 30px; }
+    .slide .sn-label.goal p { font-weight: 650; }
     .sn-label { position: absolute; text-align: center; }
     .sn-label span { display: block; font-size: 26px; font-weight: 760; letter-spacing: -0.03em; }
     .slide .sn-label p { margin-top: 6px; font-size: 18px; font-weight: 560; line-height: 1.35; }
@@ -595,8 +600,10 @@
               <circle class="sn-dot" cx="710" cy="30" r="13"/>
               <circle class="sn-halo" cx="990" cy="30" r="34"/>
               <circle class="sn-now" cx="990" cy="30" r="21"/>
+              <path class="sn-straight" d="M430 270 H990"/>
               <circle class="sn-todo" cx="430" cy="270" r="12"/>
-              <circle class="sn-todo" cx="990" cy="270" r="12"/>
+              <circle class="sn-goal-ring" cx="990" cy="270" r="20"/>
+              <circle class="sn-goal-dot" cx="990" cy="270" r="8"/>
               <circle class="sn-todo small" cx="990" cy="150" r="9"/>
               <circle class="sn-todo small" cx="850" cy="150" r="9"/>
               <circle class="sn-todo small" cx="710" cy="150" r="9"/>
@@ -610,8 +617,8 @@
             <div class="sn-label now" style="left: 840px; top: 58px; width: 300px"><span>Spike</span><p>Risky points tested?</p></div>
             <span class="sn-here">We are here</span>
             <div class="sn-label todo" style="left: 510px; top: 172px; width: 400px"><span>Iterate</span><p>Several weeks, round after round</p></div>
-            <div class="sn-label todo" style="left: 270px; top: 294px; width: 320px"><span>Reflect</span><p>What they did, what the AI did</p></div>
-            <div class="sn-label todo" style="left: 830px; top: 294px; width: 320px"><span>Present &amp; publish</span><p>At the end, in the open</p></div>
+            <div class="sn-label todo" style="left: 200px; top: 294px; width: 460px"><span>Reflect</span><p>The home straight: what they did, what the AI did</p></div>
+            <div class="sn-label goal" style="left: 830px; top: 298px; width: 320px"><span>Present &amp; publish</span><p>The goal: at the end, in the open</p></div>
           </div>
           <p class="weekly-foot">Every week, a new step on their own project. I follow it, and I support it.</p>
           <span class="slide-no">07</span>
