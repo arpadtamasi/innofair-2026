@@ -411,6 +411,8 @@
         width: 1280px;
         height: 720px;
         overflow: hidden;
+        contain: strict;
+        break-inside: avoid;
         break-after: page;
         page-break-after: always;
       }
@@ -462,7 +464,7 @@
     .slide .words-time { margin-top: 44px; font-size: 24px; font-weight: 620; }
     .slide.section-break .pivot { margin-top: 72px; color: var(--mint); font-size: 44px; font-weight: 700; letter-spacing: -0.025em; }
     .slide.section-break .quiet { margin-top: 18px; color: #9d98aa; font-size: 24px; font-weight: 520; }
-    .section-break .sb { position: absolute; top: 50%; left: 72px; right: 72px; transform: translateY(-58%); }
+    .section-break .sb { position: absolute; inset: 0 72px; display: flex; flex-direction: column; justify-content: center; padding-bottom: 70px; }
     .tu-legend { display: flex; align-items: center; gap: 10px; margin-top: 26px; color: var(--ink-soft); font-size: 18px; font-weight: 600; }
     .tu-legend .k { display: inline-block; width: 18px; height: 18px; border-radius: 3px; }
     .tu-legend .k.mine { background: #c9c6ce; }
